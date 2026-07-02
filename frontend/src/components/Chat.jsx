@@ -3,6 +3,20 @@ import { io } from "socket.io-client";
 
 const SERVER_URL = "http://localhost:4000";
 
+const AVATAR_COLORS = ["#ff7a45", "#4ade80", "#60a5fa", "#f472b6", "#fbbf24", "#a78bfa"];
+
+function getAvatarColor(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+}
+
+function getInitial(name) {
+  return name.trim().charAt(0).toUpperCase() || "?";
+}
+
 export default function Chat({ username, onLogout }) {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
@@ -58,24 +72,50 @@ export default function Chat({ username, onLogout }) {
           <span className="online-count">{onlineUsers.length} online</span>
         </div>
         <div className="user-info">
+          <div
+            className="avatar"
+            style={{ width: 26, height: 26, fontSize: 11, background: getAvatarColor(username) }}
+          >
+            {getInitial(username)}
+          </div>
           <span>{username}</span>
           <button onClick={onLogout}>Logout</button>
         </div>
       </header>
 
+      <div className="online-strip">
+        {onlineUsers.map((user, idx) => (
+          <div className="online-chip" key={`${user}-${idx}`}>
+            <div
+              className="avatar"
+              style={{ width: 22, height: 22, fontSize: 10, background: getAvatarColor(user) }}
+            >
+              {getInitial(user)}
+            </div>
+            <span>{user === username ? `${user} (you)` : user}</span>
+          </div>
+        ))}
+      </div>
+
       <div className="messages-list">
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`message-bubble ${
-              msg.username === username ? "own" : "other"
-            }`}
+            className={`message-row ${msg.username === username ? "own" : "other"}`}
           >
-            {msg.username !== username && (
-              <div className="message-sender">{msg.username}</div>
-            )}
-            <div className="message-text">{msg.text}</div>
-            <div className="message-time">{formatTime(msg.timestamp)}</div>
+            <div
+              className="avatar"
+              style={{ background: getAvatarColor(msg.username) }}
+            >
+              {getInitial(msg.username)}
+            </div>
+            <div className="message-bubble">
+              {msg.username !== username && (
+                <div className="message-sender">{msg.username}</div>
+              )}
+              <div className="message-text">{msg.text}</div>
+              <div className="message-time">{formatTime(msg.timestamp)}</div>
+            </div>
           </div>
         ))}
         <div ref={bottomRef} />

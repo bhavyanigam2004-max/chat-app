@@ -1,11 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  --bg-deep: #0f1720;
+  --bg-panel: #16212b;
+  --bg-panel-raised: #1c2933;
+  --bubble-other: #23323e;
+  --accent: #ff7a45;
+  --text-primary: #eaf0f5;
+  --text-muted: #7e8fa0;
+  --border-soft: rgba(255, 255, 255, 0.07);
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #f0f2f5;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+}
+
+/* ---- Avatar (shared) ---- */
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Sora", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: #10161c;
+  flex-shrink: 0;
 }
 
 /* ---- Login ---- */
@@ -14,58 +43,105 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 122, 69, 0.12), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(69, 180, 255, 0.08), transparent 45%),
+    var(--bg-deep);
 }
 
 .login-card {
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  padding: 40px 36px;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
   width: 320px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
+.login-mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #ffb185);
+  margin: 0 auto 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Sora", sans-serif;
+  font-weight: 800;
+  color: #1a0e07;
+  font-size: 18px;
+}
+
 .login-card h1 {
   margin: 0;
-  font-size: 24px;
+  font-family: "Sora", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
   text-align: center;
-  color: #222;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
   text-align: center;
-  color: #888;
-  margin: 0 0 8px 0;
+  color: var(--text-muted);
+  margin: 0 0 10px 0;
   font-size: 13px;
 }
 
 .login-card input {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  padding: 13px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
   font-size: 14px;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: "Inter", sans-serif;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.login-card input::placeholder {
+  color: var(--text-muted);
+}
+
+.login-card input:focus {
+  border-color: var(--accent);
 }
 
 .login-card button {
-  padding: 12px;
+  padding: 13px;
   border: none;
-  border-radius: 8px;
-  background: #4f46e5;
-  color: white;
-  font-weight: 600;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #1a0e07;
+  font-weight: 700;
+  font-family: "Sora", sans-serif;
   cursor: pointer;
   font-size: 14px;
+  margin-top: 4px;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.login-card button:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.login-card button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .login-card button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .error-text {
-  color: #e11d48;
+  color: #ff6b6b;
   font-size: 13px;
   margin: 0;
 }
@@ -77,113 +153,209 @@ body {
   flex-direction: column;
   max-width: 600px;
   margin: 0 auto;
-  background: white;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-soft);
+  border-right: 1px solid var(--border-soft);
 }
 
 .chat-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 18px;
-  background: #4f46e5;
-  color: white;
+  padding: 14px 20px;
+  background: var(--bg-panel-raised);
+  border-bottom: 1px solid var(--border-soft);
 }
 
 .chat-header h2 {
   margin: 0;
-  font-size: 18px;
+  font-family: "Sora", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .online-count {
   font-size: 12px;
-  opacity: 0.8;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.online-count::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  display: inline-block;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15);
 }
 
 .user-info {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 .user-info button {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  color: var(--text-primary);
+  padding: 6px 12px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 12px;
+  font-family: "Inter", sans-serif;
+  transition: border-color 0.15s ease;
+}
+
+.user-info button:hover {
+  border-color: var(--accent);
+}
+
+.online-strip {
+  display: flex;
+  gap: 8px;
+  padding: 10px 20px;
+  overflow-x: auto;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.online-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-panel-raised);
+  border: 1px solid var(--border-soft);
+  padding: 4px 10px 4px 4px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .messages-list {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  background: var(--bg-panel);
+}
+
+.message-row {
+  display: flex;
   gap: 8px;
-  background: #f7f7fb;
+  max-width: 78%;
+}
+
+.message-row.own {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-row.other {
+  align-self: flex-start;
 }
 
 .message-bubble {
-  max-width: 70%;
-  padding: 8px 12px;
-  border-radius: 12px;
+  padding: 10px 14px;
+  border-radius: 16px;
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.45;
   position: relative;
 }
 
-.message-bubble.own {
-  align-self: flex-end;
-  background: #4f46e5;
-  color: white;
-  border-bottom-right-radius: 2px;
+.message-row.own .message-bubble {
+  background: var(--accent);
+  color: #1a0e07;
+  border-bottom-right-radius: 4px;
 }
 
-.message-bubble.other {
-  align-self: flex-start;
-  background: #e5e5ea;
-  color: #222;
-  border-bottom-left-radius: 2px;
+.message-row.other .message-bubble {
+  background: var(--bubble-other);
+  color: var(--text-primary);
+  border-bottom-left-radius: 4px;
 }
 
 .message-sender {
   font-size: 11px;
   font-weight: 700;
-  margin-bottom: 2px;
-  opacity: 0.7;
+  margin-bottom: 3px;
+  color: var(--accent);
+  font-family: "Sora", sans-serif;
 }
 
 .message-time {
+  font-family: "JetBrains Mono", monospace;
   font-size: 10px;
-  opacity: 0.7;
-  margin-top: 4px;
+  opacity: 0.65;
+  margin-top: 5px;
   text-align: right;
 }
 
 .message-input-form {
   display: flex;
-  padding: 12px;
-  border-top: 1px solid #eee;
-  gap: 8px;
+  padding: 14px;
+  border-top: 1px solid var(--border-soft);
+  gap: 10px;
+  background: var(--bg-panel-raised);
 }
 
 .message-input-form input {
   flex: 1;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
   font-size: 14px;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: "Inter", sans-serif;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.message-input-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.message-input-form input:focus {
+  border-color: var(--accent);
 }
 
 .message-input-form button {
-  padding: 10px 18px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 20px;
-  background: #4f46e5;
-  color: white;
-  font-weight: 600;
+  border-radius: 22px;
+  background: var(--accent);
+  color: #1a0e07;
+  font-weight: 700;
+  font-family: "Sora", sans-serif;
   cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.message-input-form button:hover {
+  opacity: 0.92;
+}
+
+.message-input-form button:active {
+  transform: scale(0.97);
+}
+
+/* Scrollbar */
+.messages-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-list::-webkit-scrollbar-thumb {
+  background: var(--border-soft);
+  border-radius: 3px;
 }

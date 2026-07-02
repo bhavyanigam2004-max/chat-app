@@ -42,6 +42,7 @@ export default function Login({ onLogin }) {
   return (
     <div className="login-container">
       <form className="login-card" onSubmit={handleSubmit}>
+        <div className="login-mark">C</div>
         <h1>Simple Chat</h1>
         <p className="subtitle">Sign in to start chatting (demo login)</p>
 
